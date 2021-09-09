@@ -61,9 +61,9 @@ const sketch = p => {
     
 
     p.myCustomRedrawAccordingToNewPropsHandler = (props) => {
-        unitPatternCols = props.unitPatternCols
-        unitPatternNoise = props.unitPatternNoise
-        unitPatternNarrowGaps = props.unitPatternNarrowGaps
+        if(props.unitPatternCols) unitPatternCols = props.unitPatternCols
+        if(props.unitPatternNoise) unitPatternNoise = props.unitPatternNoise
+        if(props.unitPatternNarrowGaps) unitPatternNarrowGaps = props.unitPatternNarrowGaps
 
         exportEm = props.exportEm
 
@@ -102,6 +102,10 @@ const sketch = p => {
         p.createCanvas(w, h)
     };
 
+    p.windowResized = () => {
+        p.resizeCanvas(w, h);
+    }
+
     p.draw = () => {
         if(rotatePatternRender) {
             q = (!rotatePattern) ? p.createGraphics(w, h) : p.createGraphics(h, w)
@@ -112,6 +116,8 @@ const sketch = p => {
 
         if(updateUnitPattern) {
             rows = rowsNum * scaleY
+
+            console.log(rows)
 
             PatternData = setUnitPattern({rows: rows, PatternCol: unitPatternCols, unitPatternNoise: unitPatternNoise, unitPatternNarrowGaps: unitPatternNarrowGaps, colorScheme: colorScheme, translateScheme: translateScheme, useParams: useParams, UnitType: UnitType})
             updateUnitPattern = false

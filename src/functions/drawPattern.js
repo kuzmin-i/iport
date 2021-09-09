@@ -8,6 +8,8 @@ const drawPattern = (p, progress, PatternData, rotatePattern, CompareData) => {
 
             p.noStroke()
             p.fill(a.color.back)
+            p.strokeWeight(1)
+            p.stroke(a.color.back)
             p.rect(a.back[0] * lcScale[0], a.back[1] * lcScale[1], a.back[2] * lcScale[0] * progress, a.back[3] * lcScale[1])
 
             if(a.shapes) {
@@ -26,6 +28,8 @@ const drawPattern = (p, progress, PatternData, rotatePattern, CompareData) => {
                     }
                     
                     p.fill(a.color.front)
+                    p.strokeWeight(1)
+                    p.stroke(a.color.front)
                     
                     if(!ExFill) {
                         p.rect(
@@ -81,6 +85,8 @@ const drawPattern = (p, progress, PatternData, rotatePattern, CompareData) => {
                     if(ExFill) {
                         let ArcSize = (b[2] * lcScale[0] * progress < b[3] * lcScale[1]) ? b[2] * lcScale[0] * progress * 2 : b[3] * lcScale[1] * 2
 
+                        p.strokeWeight(1)
+                        p.stroke(a.color.front)
                         p.arc(b[0] * lcScale[0] + ArcPosition[RadiusAng][0], b[1] * lcScale[1] + ArcPosition[RadiusAng][1], ArcSize, ArcSize, ArcPosition[RadiusAng][2], ArcPosition[RadiusAng][3])
                         p.rect(b[0] * lcScale[0] + ExtraRectPos[RadiusAng][0], b[1] * lcScale[1] + ExtraRectPos[RadiusAng][1], ExtraRectPos[RadiusAng][2], ExtraRectPos[RadiusAng][3])
 

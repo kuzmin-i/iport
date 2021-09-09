@@ -325,9 +325,38 @@ const setUnitPattern = ({ rows, PatternCol, unitPatternNoise, unitPatternNarrowG
     proportionsX.map((key) => {
             SumProportionsX += key
     })
-    proportionsY.map((key) => {
+
+    let _rows = Math.round(rows / 10 * proportionsY.length)
+
+    let _proportionsY = []
+    if(_rows <= proportionsY.length) {
+        _proportionsY = proportionsY.slice(0, _rows)
+    } else if(_rows > proportionsY.length) {
+        let _count = Math.ceil(rows / 10)
+
+        for(let am = 0; am < _count; am++) {
+            let bm = (rows / 10) % Math.floor(rows / 10)
+            
+            if(am+1 === _count) {
+                if(bm <= 0) {
+                    _proportionsY = [..._proportionsY, ...proportionsY]
+                } else if(bm > 0) {
+                    let cm = Math.round(bm * proportionsY.length)
+                    let dm = proportionsY.slice(0, cm)
+
+                    _proportionsY = [..._proportionsY, ...dm]
+                }
+            } else {
+                _proportionsY = [..._proportionsY, ...proportionsY]  
+            }
+        }
+    }
+
+    _proportionsY.map((key) => {
         SumProportionsY += key
     })
+
+    console.log('P ' + _proportionsY)
 
     let startX = 100 / SumProportionsX
     let startY = 100 / SumProportionsY
@@ -345,8 +374,8 @@ const setUnitPattern = ({ rows, PatternCol, unitPatternNoise, unitPatternNarrowG
 
         let bc = 0
 
-        for(let b=0; b<proportionsY.length; b++) {
-            let height = startY * proportionsY[b]
+        for(let b=0; b<_proportionsY.length; b++) {
+            let height = startY * _proportionsY[b]
 
             let _exception = false
 
