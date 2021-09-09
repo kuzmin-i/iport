@@ -22,7 +22,7 @@ function App() {
 
     return (
       <Components.Row input>
-        <Components.Label>Colors</Components.Label>
+        <Components.Label>Палитра</Components.Label>
         <div style={{display: 'flex', flexDirection: 'row'}}>
         <div onClick={() => setHValues({colorScheme: 'sch1'})} style={{width: '30px', height: '25px', border: '10px', cursor: 'pointer', marginLeft: '10px'}}>
           <img src="/icons/color5.svg" width="30px"/>
@@ -41,8 +41,6 @@ function App() {
     )
   }
 
-  console.log('re')
-  console.log(Components)
 
   const colorComponent1 = createPlugin(
     {
@@ -53,37 +51,27 @@ function App() {
   const [Values, setValues] = useControls('Unit Appearance', () => ({
     CComp: colorComponent1(),
     BtnGroup1: buttonGroup({
-      label: '',
+      label: 'Схемы',
       opts: {
-        'Scheme 1': () => {
+        '1': () => {
           setHValues({translateScheme: 'sch1'})
           setHValues({UnitType: 0})
         },
-        'Scheme 2': () => {
+        '2': () => {
           setHValues({translateScheme: 'sch2'})
           setHValues({UnitType: 0})
         },
-        'Scheme 3': () => {
+        '3': () => {
           setHValues({translateScheme: 'sch3'})
           setHValues({UnitType: 0})
         },
-      }
-    }),
-    BtnGroup2: buttonGroup({
-      label: '',
-      opts: {
-        'Scheme 4': () => {
+        '4': () => {
           setHValues({translateScheme: 'sch4'})
           setHValues({UnitType: 0})
         },
-        'Scheme 5': () => setHValues({UnitType: 1}),
-        'Scheme 6': () => setHValues({UnitType: 2})
-      }
-    }),
-    BtnGroup3: buttonGroup({
-      label: '',
-      opts: {
-        'Scheme 7': () => setHValues({UnitType: 3})
+        '5': () => setHValues({UnitType: 1}),
+        '6': () => setHValues({UnitType: 2}),
+        '7': () => setHValues({UnitType: 3})
       }
     })
   }))
@@ -91,14 +79,14 @@ function App() {
 
   console.log(Values)
 
-  const [{ roundEdges, roundEdgesNum,  }, setUSValues] = useControls('Unit Scheme', () => ({ roundEdges: false, roundEdgesNum: 2}))
-  const { progression, progressionScale, scaleX, scaleY } = useControls('Common Pattern Scheme', { progression: false, progressionScale: 2.0, scaleX: 1.0, scaleY: 1.0 })
+  const [{ roundEdges, roundEdgesNum,  }, setUSValues] = useControls('Скруглить края', () => ({ roundEdges: {value: false, label: 'Включить'}, roundEdgesNum: {value: 2, label: 'Кол-во раз'}}))
+  const { progression, progressionScale, scaleX, scaleY } = useControls('Размножить паттерн', { progression: {value: false, label: 'Геом. прогрессия'}, progressionScale: {value: 2.0, label: 'Коэффициент геом. прогрессии'}, scaleX: {value: 1.0, label: 'Масштаб X'}, scaleY: {value: 1.0, label: 'Масштаб Y'} })
   
 
 
-  const EffectValues = useControls('Effects: 2 images', { set2images: false, firstIMGtranslate: 0 })
-  const [ViewportValues, setViewportValues] = useControls('Viewport Setting', () => ({
-    rotatePattern: false,
+  const EffectValues = useControls('Смещения ядра вправо', { set2images: {value: false, label: 'Включить'}, firstIMGtranslate: {value: 0, label: 'Смещение'} })
+  const [ViewportValues, setViewportValues] = useControls('Экспорт холста', () => ({
+    rotatePattern: {value: false, label: 'Повернуть'},
     ratio: 16/7, 
     VPBtnGroup: buttonGroup({
       'label': 'Formats',
