@@ -15,7 +15,6 @@ const sketch = p => {
     let h = p.windowHeight
 
     /* Initial Params that won't be changed */
-    let PatternCol = 4
     let PatternData = []
     let CommonPatternData = []
     let CompareData = []
@@ -29,7 +28,6 @@ const sketch = p => {
 
     let roundEdges = false
     let roundEdgesNum = 2
-    let useParams = true
 
     let UnitType = 0
 
@@ -78,8 +76,7 @@ const sketch = p => {
 
         progression = props.progression
         progressionScale = props.progressionScale
-
-        useParams = props.useParams
+        
         UnitType = props.UnitType
         roundEdges = props.roundEdges
         roundEdgesNum = props.roundEdgesNum
@@ -119,28 +116,12 @@ const sketch = p => {
 
             console.log(rows)
 
-            PatternData = setUnitPattern({rows: rows, PatternCol: unitPatternCols, unitPatternNoise: unitPatternNoise, unitPatternNarrowGaps: unitPatternNarrowGaps, colorScheme: colorScheme, translateScheme: translateScheme, useParams: useParams, UnitType: UnitType})
+            PatternData = setUnitPattern({rows: rows, PatternCol: unitPatternCols, unitPatternNoise: unitPatternNoise, unitPatternNarrowGaps: unitPatternNarrowGaps, colorScheme: colorScheme, translateScheme: translateScheme, UnitType: UnitType})
             updateUnitPattern = false
         }
 
         CommonPatternData = setCommonPatternData(progression, progressionScale, PatternData, scaleX, scaleY)
         CompareData = setCompareData(CommonPatternData, roundEdges, roundEdgesNum)
-        
-        
-
-        /*CommonPatternData = PatternData.map((a, i) => {
-            let lcShapes = []
-            a.shapes.map((b, c) => {
-                lcShapes[c] = [...b]
-            })
-
-            return {
-                back: [...a.back],
-                shapes: [...lcShapes],
-                color: {...a.color}
-            }
-        })
-        */
 
         drawPattern(q, progress, CommonPatternData, rotatePattern, CompareData)
 

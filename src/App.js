@@ -1,40 +1,38 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import P5Wrapper from "react-p5-wrapper";
 
 import sketch from './pattern/a'
-import Scene from './threejs/a'
 
-import { button, buttonGroup, useControls, folder,  } from "leva"
+import { button, buttonGroup, useControls } from "leva"
 import { Components, createPlugin } from 'leva/plugin'
 
 function App() {
-  const [useParams, setUseParams] = useState(true)
-
   const [exportEm, setExportEm] = useState(false)
 
-  let ratio1 = 16 / 9
-  const [tstyle, setTStyle] = useState({height: '60px', background: 'rgba(255, 0, 0, .6)', width: '100vw', position: 'absolute', left: '0px', top: '0px'})
+  const [colorScheme, setColorScheme] = useState('sch1')
+  const [translateScheme, setTranslateScheme] = useState('sch1')
 
+  const UnitType = 0
+
+  
+  
   const ColorComponent = () => {
-    /* <Components.Label>Colors</Components.Label>
-        <Components.ValueInput value="Hello" />
-        */
 
     return (
       <Components.Row input>
         <Components.Label>Палитра</Components.Label>
         <div style={{display: 'flex', flexDirection: 'row'}}>
-        <div onClick={() => setHValues({colorScheme: 'sch1'})} style={{width: '30px', height: '25px', border: '10px', cursor: 'pointer', marginLeft: '10px'}}>
-          <img src="/icons/color5.svg" width="30px"/>
+        <div onClick={() => setColorScheme('sch1')} className="colorPoint">
+          <img src="/icons/color5.svg" alt="White / Blue / Black" width="30px"/>
         </div>
-        <div onClick={() => setHValues({colorScheme: 'sch2'})} style={{width: '30px', height: '25px', border: '10px', cursor: 'pointer', marginLeft: '10px'}}>
-          <img src="/icons/aa7.png" width="30px"/>
+        <div onClick={() => setColorScheme('sch2')} className="colorPoint">
+          <img src="/icons/aa7.png" alt="White / Light Purple" width="30px"/>
         </div>
-        <div onClick={() => setHValues({colorScheme: 'sch3'})} style={{width: '30px', height: '25px', border: '10px', cursor: 'pointer', marginLeft: '10px'}}>
-          <img src="/icons/aa4.png" width="30px"/>
+        <div onClick={() => setColorScheme('sch3')} className="colorPoint">
+          <img src="/icons/aa4.png" alt="Light Purple / Purple" width="30px"/>
         </div>
-        <div onClick={() => setHValues({colorScheme: 'sch4'})} style={{width: '30px', height: '25px', border: '10px', cursor: 'pointer', marginLeft: '10px'}}>
-          <img src="/icons/aa2.png" width="30px"/>
+        <div onClick={() => setColorScheme('sch4')} className="colorPoint">
+          <img src="/icons/aa2.png" alt="Light Purple / Black" width="30px"/>
         </div>
         </div>
       </Components.Row>
@@ -53,25 +51,13 @@ function App() {
     BtnGroup1: buttonGroup({
       label: 'Схемы',
       opts: {
-        '1': () => {
-          setHValues({translateScheme: 'sch1'})
-          setHValues({UnitType: 0})
-        },
-        '2': () => {
-          setHValues({translateScheme: 'sch2'})
-          setHValues({UnitType: 0})
-        },
-        '3': () => {
-          setHValues({translateScheme: 'sch3'})
-          setHValues({UnitType: 0})
-        },
-        '4': () => {
-          setHValues({translateScheme: 'sch4'})
-          setHValues({UnitType: 0})
-        },
-        '5': () => setHValues({UnitType: 1}),
-        '6': () => setHValues({UnitType: 2}),
-        '7': () => setHValues({UnitType: 3})
+        '1': () => setTranslateScheme('sch1'),
+        '2': () => setTranslateScheme('sch2'),
+        '3': () => setTranslateScheme('sch3'),
+        '4': () => setTranslateScheme('sch4'),
+        '5': () => setTranslateScheme('sch5'),
+        '6': () => setTranslateScheme('sch6'),
+        '7': () => setTranslateScheme('sch7')
       }
     })
   }))
@@ -102,20 +88,10 @@ function App() {
     })
   }))
 
-  const [HiddenValues, setHValues] = useControls(() => ({HiddenValues1: folder({ colorScheme: 'sch1', translateScheme: 'sch1', UnitType: 0 }, {collapsed: true})}))
+  
 
   const changeExportStatus = (status) => {
     setExportEm(status)
-  }
-  
-  let msk = 1
-
-  const checkParamsState = (key) => {
-    if(key === 'g') {
-      setUseParams(false)
-    } else if(key === 'h') {
-      setUseParams(true)
-    }
   }
 
   return (
@@ -123,33 +99,31 @@ function App() {
   
   <div style={{position: 'absolute'}}>
     <P5Wrapper 
-    sketch={sketch} 
+      sketch={sketch} 
 
-    useParams = {useParams}
+      scaleX={scaleX}
+      scaleY={scaleY}
 
-    scaleX={scaleX}
-    scaleY={scaleY}
+      progression={progression}
+      progressionScale={progressionScale}
 
-    progression={progression}
-    progressionScale={progressionScale}
+      rotatePattern={ViewportValues.rotatePattern}
 
-    rotatePattern={ViewportValues.rotatePattern}
+      EffectValues={EffectValues}
 
-    EffectValues={EffectValues}
-
-    colorScheme={HiddenValues.colorScheme}
-    translateScheme={HiddenValues.translateScheme}
+      colorScheme={colorScheme}
+      translateScheme={translateScheme}
 
 
-    roundEdges = {roundEdges}
-    roundEdgesNum = {roundEdgesNum}
+      roundEdges = {roundEdges}
+      roundEdgesNum = {roundEdgesNum}
 
-    ratio={ViewportValues.ratio}
+      ratio={ViewportValues.ratio}
 
-    UnitType = {HiddenValues.UnitType}
+      UnitType = {UnitType}
 
-    exportEm={exportEm}
-    changeExportStatus={changeExportStatus}
+      exportEm={exportEm}
+      changeExportStatus={changeExportStatus}
     />
     </div>
      </>
@@ -157,13 +131,3 @@ function App() {
 }
 
 export default App;
-
-/* Three JS Scene */
-
-/* 
-  <div style={{width: '100vw', height: '100vh'}}>
-    <Scene/>
-  </div>
-*/
-
-/* End */

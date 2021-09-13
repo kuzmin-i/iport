@@ -1,7 +1,4 @@
-const setCommonPatternData = (progression, progressionScale, PatternData, scaleX, scaleY) => {
-        let compareNum = 4
-        let compareData = []
-
+const setCommonPatternData = (progression, progressionScale, PatternData, scaleX) => {
         let CommonPatternData = []
 
         let CommonCols = Math.ceil(scaleX)
@@ -21,8 +18,6 @@ const setCommonPatternData = (progression, progressionScale, PatternData, scaleX
                 let lcShapes = []
                 a.shapes.map((b, c) => {
                     lcShapes[c] = [...b]
-
-                    //console.log(progression)
 
                     if(!progression || progressionScale === 1) {
                         lcShapes[c][0] /= scaleX
